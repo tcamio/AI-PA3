@@ -2,7 +2,7 @@ public class Node<S, A> {
 	private final S state;
 	private final Node<S, A> parent;
 	private final A action;
-	private final double rewards;
+	private double rewards;
 
 	public Node(S state) {
 		this(state, null, null, 0.0);
@@ -21,6 +21,10 @@ public class Node<S, A> {
 
 	public A getAction() {
 		return action;
+	}
+
+	public S getState() {
+		return state;
 	}
 
 	public boolean isRootNode() {
