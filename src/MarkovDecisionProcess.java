@@ -1,40 +1,147 @@
-import java.uteil.set;
+import java.util.*;
 
-public class MarkovDecisionProcess<S, A> {
+public class MarkovDecisionProcess {
 
-    Set<String> states = new HashSet<>();
+    // Initial state
+    // private stateNode s0 = new stateNode("RU8p", 0);
+    // Set<stateNode> states = new HashSet<>();
+
+    Random rnd = new Random();
+
+    Map<String, Double> states = new HashMap<>();
+    
     Set<String> actions = new HashSet<>();
     Set<String> actions_wo_S = new HashSet<>();
 
+
     // Add states to states
-    states.add("RU8p");
-    states.add("TU10p");
-    states.add("RU10p");
-    states.add("RD8p");
-    states.add("RU8a");
-    states.add("RD8a");
-    states.add("TU10a");
-    states.add("RU10a");
-    states.add("RD10a");
-    states.add("TD10a");
-    states.add("11am");
+    public MarkovDecisionProcess() {
+
+        this.states.put("RU8p", 0.0);
+        this.states.put("TU10p", 0.0);
+        this.states.put("RU10p", 0.0);
+        this.states.put("RD10p", 0.0);
+        this.states.put("RU8a", 0.0);
+        this.states.put("RD8a", 0.0);
+        this.states.put("TU10a", 0.0);
+        this.states.put("RU10a", 0.0);
+        this.states.put("RD10a", 0.0);
+        this.states.put("RD10a", 0.0);
+        this.states.put("11am", 0.0);
+
+        // Add actions to actions
+        actions.add("P");
+        actions.add("R");
+        actions.add("S");
+        
+        // Add actions to actions_wo_S
+        actions_wo_S.add("P");
+        actions_wo_S.add("R");
+
+        // Add to the set of states
+        /*
+        this.states.add(s0);
+        this.states.add(new stateNode("TU10p", 0));
+        this.states.add(new stateNode("RU10p", 0));
+        this.states.add(new stateNode("RD10p", 0));
+        this.states.add(new stateNode("RU8a", 0));
+        this.states.add(new stateNode("RD8a", 0));
+        this.states.add(new stateNode("TU10a", 0));
+        this.states.add(new stateNode("RU10a", 0));
+        this.states.add(new stateNode("RD10a", 0));
+        this.states.add(new stateNode("RD10a", 0));
+        this.states.add(new stateNode("11am", 0));
+        */
+        
+    }
+    
 
     // Add actions to actions
-    actions.add("P");
-    actions.add("R");
-    actions.add("S");
+    public void setActions() {
+        actions.add("P");
+        actions.add("R");
+        actions.add("S");
+    }
+    
 
     // Add actions to actions_wo_S
-    actions_wo_S.add("P");
-    actions_wo_S.add("R");
+    public void setActions_wo_s(){
+        actions_wo_S.add("P");
+        actions_wo_S.add("R");    
+    }
+    
+    public String getNextState(String s, String a) {
+        if (s == "RU8p") {
+            if (a == "P") {
+                return "TU10p";
+            } else if (a == "R") {
+                return "RU10p";
+            } else if (a == "S") {
+                return "RU10p";
+            }
+        }
+
+        if (s == "TU10p") {
+            if (a == "P") {
+                return "RU10a";
+            } else if (a == "R") {
+                return "RU8a";
+            }
+        }
+
+        if (s == "RU10p") {
+            if (a == "R") {
+                return "RU8a";
+            } else if (a == "P") {
+                if (rnd.nextBoolean()) {
+                    return "RU8a";
+                } else {
+                    return "RU10a";
+                }
+            } else if (a == "S") {
+                return "RD8a";
+            }
+        }
+
+        if (s == "RD10p") {
+            if (a == "R") {
+                return "RD8a";
+            } else if (a == "P") {
+                if (rnd.nextBoolean()) {
+                    return "RD8a";
+                } else {
+                    return "RD10a";
+                }
+            }
+        }
+
+        if (s == "RU8a") {
+            if (a == "P") {
+                return "TU10a";
+            } else if (a == "R") {
+                return "RU10a";
+            } else if (a == "S") {
+                return "RD10a";
+            }
+        }
+
+        if (s == "RD8a") {
+            if (a == "R") {
+                return "RD10a";
+            } else if (a == "P") {
+                return "TD10a";
+            }
+        }
+        return "11am";
+    }
 
     /**
 	 * Get the set of states associated with the Markov decision process.
 	 * 
 	 * @return the set of states associated with the Markov decision process.
 	 */
-    Set<String> states() {
-        return states;
+    Map<String, Double> states() {
+        return this.states;
     }
 
     /**
@@ -43,7 +150,7 @@ public class MarkovDecisionProcess<S, A> {
 	 * 
 	 * @return the initial state s0.
 	 */
-    public S getInitialState() {
+    public String getInitialState() {
         return "RU8p";
     }
 
@@ -54,7 +161,7 @@ public class MarkovDecisionProcess<S, A> {
 	 *            the state.
 	 * @return the set of actions for state s.
 	 */
-    Set<String> getActions(String s) {
+    public Set<String> getActions(String s) {
         if (s == "RD10p" || s == "RD8a") {
             return actions_wo_S;
         } else {
@@ -90,7 +197,7 @@ public class MarkovDecisionProcess<S, A> {
 	 *            the state whose award is sought.
 	 * @return the reward associated with being in state s.
 	 */
-    public double reward(String s) {
+    public double getReward(String s) {
         if (s == "P") {
             return 2.0;
         } else if (s == "R") {
