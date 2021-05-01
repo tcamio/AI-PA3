@@ -26,7 +26,7 @@ public class MarkovDecisionProcess {
         this.states.put("TU10a", 0.0);
         this.states.put("RU10a", 0.0);
         this.states.put("RD10a", 0.0);
-        this.states.put("RD10a", 0.0);
+        this.states.put("TD10a", 0.0);
         this.states.put("11am", 0.0);
 
         // Add actions to actions
@@ -37,21 +37,6 @@ public class MarkovDecisionProcess {
         // Add actions to actions_wo_S
         actions_wo_S.add("P");
         actions_wo_S.add("R");
-
-        // Add to the set of states
-        /*
-        this.states.add(s0);
-        this.states.add(new stateNode("TU10p", 0));
-        this.states.add(new stateNode("RU10p", 0));
-        this.states.add(new stateNode("RD10p", 0));
-        this.states.add(new stateNode("RU8a", 0));
-        this.states.add(new stateNode("RD8a", 0));
-        this.states.add(new stateNode("TU10a", 0));
-        this.states.add(new stateNode("RU10a", 0));
-        this.states.add(new stateNode("RD10a", 0));
-        this.states.add(new stateNode("RD10a", 0));
-        this.states.add(new stateNode("11am", 0));
-        */
         
     }
     
@@ -77,7 +62,7 @@ public class MarkovDecisionProcess {
             } else if (a == "R") {
                 return "RU10p";
             } else if (a == "S") {
-                return "RU10p";
+                return "RD10p";
             }
         }
 
@@ -132,6 +117,7 @@ public class MarkovDecisionProcess {
                 return "TD10a";
             }
         }
+        
         return "11am";
     }
 
@@ -162,7 +148,7 @@ public class MarkovDecisionProcess {
 	 * @return the set of actions for state s.
 	 */
     public Set<String> getActions(String s) {
-        if (s == "RD10p" || s == "RD8a") {
+        if (s == "RD10p" || s == "RD8a" || s == "TU10p") {
             return actions_wo_S;
         } else {
             return actions;
@@ -190,6 +176,7 @@ public class MarkovDecisionProcess {
         return 1.0;
     }
 
+    
     /**
 	 * Get the reward associated with being in state s.
 	 * 
@@ -197,6 +184,7 @@ public class MarkovDecisionProcess {
 	 *            the state whose award is sought.
 	 * @return the reward associated with being in state s.
 	 */
+    /*
     public double getReward(String s) {
         if (s == "P") {
             return 2.0;
@@ -205,5 +193,27 @@ public class MarkovDecisionProcess {
         } else {
             return -1.0;
         }
+    }
+    */
+
+    public double getReward(String s, String a) {
+        if (s == "TU10a") {
+            return -1.0;
+        } else if (s == "RU10a") {
+            return 0.0;
+        } else if (s == "RD10a") {
+            return 4.0;
+        } else if (s == "TD10a") {
+            return 3.0;
+        }
+
+        if (a == "P") {
+            return 2.0;
+        } else if (a == "R") {
+            return 0.0;
+        } else { // when a == "S"
+            return -1.0;
+        }
+
     }
 }

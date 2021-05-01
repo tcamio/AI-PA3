@@ -12,28 +12,27 @@ public class monteCarlo {
     // Learning rate
     private final double alpha = 0.1;
 
+    private double total50Rewards = 0.0;
+
     Random rnd = new Random();
 
     // V(s)<-v(s)+alpha[Reward-v(s)]
-    public void updateValue(String s, String a) {
+    public void updateValue(String s, String a, double r) {
         double currentValue = MDP.states.get(s);
-        double reward = MDP.getReward(s);
-        double newValue = currentValue + alpha * (reward - currentValue);
+        double newValue = currentValue + alpha * (r - currentValue);
         MDP.states.put(s, newValue);
     }
 
-    public void runEpisode() {    
-        // MDP.setStates();
-
-        System.out.println("Initial values: " + MDP.states);
-
-        // MDP.states.put("RU8p", 1.0);
-
-        // System.out.println("States and value: " + MDP.states);
+    public void runEpisode() {
 
         String currentState = "RU8p";
-        double totalReward;
+        double totalReward = 0.0;
+        ArrayList<String> stateList = new ArrayList<>();
+        ArrayList<String> actionList = new ArrayList<>();
+        ArrayList<Double> rewardList = new ArrayList<>();
 
+        stateList.add(currentState);
+        
         while(true){
             if (currentState == "11am") {
                 break;
@@ -41,19 +40,38 @@ public class monteCarlo {
             // Get an action
             String a = pickAction(currentState);
 
+            // Add to action list
+            actionList.add(a);
+
             // Get reward
-            double r = getReward(currentState, a);
+            double r = MDP.getReward(currentState, a);
+
+            // Add to reward list
+            rewardList.add(r);
+
+            // Update value
+            updateValue(currentState, a, r);
+
+            // Increment total reward
+            totalReward += r;
 
             // get next state
             String nextState = MDP.getNextState(currentState, a);
 
+            // Add state list
+            stateList.add(nextState);
+
+            // Update current state
             currentState = nextState;
         }
+        
+        this.total50Rewards += totalReward;
 
-        System.out.println("The sequence of states is ");
-        System.out.println("The sequence of actions is ");
-        System.out.println("The sequence of rewards is ");
-        System.out.println("The sum of the rewards is ");
+        System.out.println("The sequence of states is " + stateList.toString());
+        System.out.println("The sequence of actions is " + actionList.toString());
+        System.out.println("The sequence of rewards is " + rewardList.toString());
+        System.out.println("The sum of the rewards is " + totalReward);
+        System.out.println("The average reward is " + (totalReward/rewardList.size()));
     }
 
 
@@ -81,27 +99,15 @@ public class monteCarlo {
         }
     }
 
-    public double getReward(String s, String a) {
-            if (s == "TU10a") {
-                return -1.0;
-            } else if (s == "RU10a") {
-                return 0.0;
-            } else if (s == "RD10a") {
-                return 4.0;
-            } else if (s == "TD10a") {
-                return 3.0;
-            }
     
-            if (a == "P") {
-                return 2.0;
-            } else if (a == "R") {
-                return 0.0;
-            } else { // when a == "S"
-                return -1.0;
-            }
+    public void run50Episodes() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println("Episode " + (i+1));
+            runEpisode();
+            System.out.println();
+        }
 
+        System.out.println("The values of all states at the end of the experiment is " + MDP.states);
     }
 
-
-    //System.out.println("This is monteCarlo class.");
 }

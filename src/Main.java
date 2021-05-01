@@ -1,19 +1,18 @@
-import java.util.*;
+//import java.util.*;
 
 public class Main {
 	public static void main(String[] args) {
-		// test
-		System.out.println("test message");
-		// createTree();
 
 		// Part I
 		// monteCarlo();
 		monteCarlo mc = new monteCarlo();
 
-		mc.runEpisode();
-
+		mc.run50Episodes();
+		
 		// Part II
 		// valueIteration();
+
+		valueIteration vi = new valueIteration();
 
 		// Part III
 		// QLearning();
