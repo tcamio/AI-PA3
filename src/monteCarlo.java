@@ -74,7 +74,7 @@ public class monteCarlo {
         System.out.println("The average reward is " + (totalReward/rewardList.size()));
     }
 
-
+    // Pick action randomly
     public String pickAction(String currentState) {
         Set<String> actions = MDP.getActions(currentState);
 

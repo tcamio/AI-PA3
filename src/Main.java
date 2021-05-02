@@ -5,15 +5,17 @@ public class Main {
 
 		// Part I
 		// monteCarlo();
-		monteCarlo mc = new monteCarlo();
+		//monteCarlo mc = new monteCarlo();
 
-		mc.run50Episodes();
+		//mc.run50Episodes();
 		
 		// Part II
 		// valueIteration();
 
 		valueIteration vi = new valueIteration();
 
+		vi.runIteration();
+		
 		// Part III
 		// QLearning();
 		}

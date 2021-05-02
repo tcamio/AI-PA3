@@ -55,6 +55,7 @@ public class MarkovDecisionProcess {
         actions_wo_S.add("R");    
     }
     
+    // Get next state based on state and action
     public String getNextState(String s, String a) {
         if (s == "RU8p") {
             if (a == "P") {
@@ -196,6 +197,7 @@ public class MarkovDecisionProcess {
     }
     */
 
+    // Get reward based on state and action
     public double getReward(String s, String a) {
         if (s == "TU10a") {
             return -1.0;
