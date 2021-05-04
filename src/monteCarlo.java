@@ -12,8 +12,6 @@ public class monteCarlo {
     // Learning rate
     private final double alpha = 0.1;
 
-    private double total50Rewards = 0.0;
-
     Random rnd = new Random();
 
     // V(s)<-v(s)+alpha[Reward-v(s)]
@@ -64,8 +62,6 @@ public class monteCarlo {
             // Update current state
             currentState = nextState;
         }
-        
-        this.total50Rewards += totalReward;
 
         System.out.println("The sequence of states is " + stateList.toString());
         System.out.println("The sequence of actions is " + actionList.toString());
