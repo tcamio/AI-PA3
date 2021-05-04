@@ -77,6 +77,7 @@ public class QLearning {
         return max;
     }
 
+    // Create and initialize Q value table
     public double[][] createQTable() {
         double[][] QTable = new double[11][3];
         for (int i = 0; i < QTable.length; i ++) {
@@ -87,6 +88,7 @@ public class QLearning {
         return QTable;
     }
 
+    // Run episodes untill the maximum change in Q values is less than 0.001
     public void runEpisode() {
         String currentState = "RU8p";
         ArrayList<Double> QDiffList = new ArrayList<>();
@@ -106,6 +108,10 @@ public class QLearning {
         int actionInd = -1;
 
         while(true){
+            if (currentState == "RU8p") {
+                System.out.println("This is episode #" + (numItr+1));
+            }
+
             if (currentState == "11am") {
                 numItr++;
                 maxQValDiff = findMaxList(QDiffList);

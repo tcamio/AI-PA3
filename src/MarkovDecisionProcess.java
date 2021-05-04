@@ -2,10 +2,6 @@ import java.util.*;
 
 public class MarkovDecisionProcess {
 
-    // Initial state
-    // private stateNode s0 = new stateNode("RU8p", 0);
-    // Set<stateNode> states = new HashSet<>();
-
     Random rnd = new Random();
 
     Map<String, Double> states = new HashMap<>();
@@ -122,32 +118,21 @@ public class MarkovDecisionProcess {
         return "11am";
     }
 
-    /**
-	 * Get the set of states associated with the Markov decision process.
-	 * 
-	 * @return the set of states associated with the Markov decision process.
-	 */
+    
+	// Get the set of states associated with the Markov decision process.
     Map<String, Double> states() {
         return this.states;
     }
 
-    /**
-	 * Get the initial state s0 for this instance of a Markov
-	 * decision process.
-	 * 
-	 * @return the initial state s0.
-	 */
+    
+	// Get the initial state s0 for this instance of a Markov
+	// decision process.
     public String getInitialState() {
         return "RU8p";
     }
 
-    /**
-	 * Get the set of actions for state s.
-	 * 
-	 * @param s
-	 *            the state.
-	 * @return the set of actions for state s.
-	 */
+    
+	// Get the set of actions for state s.
     public Set<String> getActions(String s) {
         if (s == "RD10p" || s == "RD8a" || s == "TU10p") {
             return actions_wo_S;
@@ -156,18 +141,9 @@ public class MarkovDecisionProcess {
         }
     }
 
-    /**
-	 * Return the probability of going from state s using action a to s' based
-	 * on the underlying transition model P(s' | s, a).
-	 * 
-	 * @param sPrime
-	 *            the state s' being transitioned to.
-	 * @param s
-	 *            the state s being transitions from.
-	 * @param a
-	 *            the action used to move from state s to s'.
-	 * @return the probability of going from state s using action a to s'.
-	 */
+    
+	// Return the probability of going from state s using action a to s' based
+	// on the underlying transition model P(s' | s, a).
     public double transitionProbability(String sPrime, String s, String a) {
         if (s == "RU10p" || s == "RD10p") {
             if (a == "P") {
@@ -177,25 +153,6 @@ public class MarkovDecisionProcess {
         return 1.0;
     }
 
-    
-    /**
-	 * Get the reward associated with being in state s.
-	 * 
-	 * @param s
-	 *            the state whose award is sought.
-	 * @return the reward associated with being in state s.
-	 */
-    /*
-    public double getReward(String s) {
-        if (s == "P") {
-            return 2.0;
-        } else if (s == "R") {
-            return 0.0;
-        } else {
-            return -1.0;
-        }
-    }
-    */
 
     // Get reward based on state and action
     public double getReward(String s, String a) {
