@@ -181,14 +181,11 @@ public class QLearning {
     public void printOptimalPolicy(double[][] QTable) {
         String a;
         for (int i = 0; i < QTable.length; i++) {
-            if (stateArray[i] == "TU10a" || stateArray[i] == "RU10a" || stateArray[i] == "RD10a" || stateArray[i] == "TD10a") {
-                System.out.print(stateArray[i] + "=any ");
-                continue;    
-            } else if (stateArray[i] == "11am") {
+            if (stateArray[i] == "11am") {
                 System.out.print(stateArray[i] + "=None ");
-                continue;
-            }
-             a = actionArray[maxQValAction(QTable[i])];
+                continue; 
+            } 
+            a = actionArray[maxQValAction(QTable[i])];
             System.out.print(stateArray[i] + "=" + a + " ");
         }
     }
